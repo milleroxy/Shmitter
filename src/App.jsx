@@ -5,16 +5,22 @@ import {useEffect, useState} from "react";
 import {TwitterContext} from "./utils/context.js";
 
 function App() {
-    const [user, setUser] = useState (
-        {
-                name: 'Monster',
-                avatar: 'https://gravatar.com/avatar/000?d=monsterid'
-                 });
+    const [user, setUser] = useState(() => {
+        const savedUser = localStorage.getItem('user');
+        return savedUser ? JSON.parse(savedUser) : {
+            name: 'Monster',
+            avatar: 'https://gravatar.com/avatar/000?d=monsterid'
+        };
+    });
 
     const [stats, setStats] = useState({
         followers: 10,
         following: 100
     });
+
+    useEffect(() => {
+        localStorage.setItem('user', JSON.stringify(user));
+    }, [user]);
 
     const changeAvatar = url => {
             setUser(
