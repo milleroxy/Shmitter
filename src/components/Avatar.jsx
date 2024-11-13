@@ -1,13 +1,23 @@
 import {useContext} from "react";
 import {TwitterContext} from "../utils/context.js";
+import {handleUpdate} from "../utils/functions.jsx";
 
 const Avatar = ({size}) => {
-    const {user, changeAvatar} = useContext(TwitterContext);
+    const {user, changeAvatar, changeName} = useContext(TwitterContext);
+
+
     return (
         <img
-            onClick = { () =>{
-                const url = prompt('Enter new avatar url');
-                changeAvatar(url);
+
+        //     onContextMenu = { () => {
+        //          const newName = prompt('Enter new name');
+        //          changeName(newName);
+        // }}
+            onClick= { () => {
+                handleUpdate('Enter new avatar URL', changeAvatar);
+            }}
+            onContextMenu={ () => {
+                handleUpdate('Enter new name', changeName)
             }}
             className={`user-avatar ${size ?? ''}`}
             src={user.avatar}
